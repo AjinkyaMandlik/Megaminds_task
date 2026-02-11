@@ -3,51 +3,42 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "data_bucket" {
-  bucket = "internship-event-data-bucket"
+  bucket = "internship-event-data-ajinkya-2026"
 }
 
 resource "aws_iam_role" "lambda_role" {
-  name = "lambda-execution-role-"
+  name = "lambda-execution-role-ajinkya"
 
   assume_role_policy = jsonencode({
-    Version = "2012-10-17",
+    Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow",
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
       Principal = {
         Service = "lambda.amazonaws.com"
-      },
-      Action = "sts:AssumeRole"
+      }
     }]
   })
 }
 
-resource "aws_iam_role_policy_attachment" "lambda_policy" {
+resource "aws_iam_role_policy_attachment" "lambda_basic" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
+I
+data "archive_file" "lambda_zip" {
+  type        = "zip"
+  source_dir  = "${path.module}/../lambda"
+  output_path = "${path.module}/lambda.zip"
+}
+
 resource "aws_lambda_function" "data_processor" {
-  function_name = "event-driven-data-processor"
-  runtime       = "python3.9"
-  handler       = "lambda_function.lambda_handler"
+  function_name = "event-driven-data-processor-ajinkya"
   role          = aws_iam_role.lambda_role.arn
-  filename      = "../lambda/lambda.zip"
-}
+  handler       = "lambda_function.lambda_handler"
+  runtime       = "python3.9"
 
-resource "aws_cloudwatch_event_rule" "daily_rule" {
-  name                = "daily-data-processing-rule"
-  schedule_expression = "rate(1 day)"
-}
-
-resource "aws_cloudwatch_event_target" "lambda_target" {
-  rule = aws_cloudwatch_event_rule.daily_rule.name
-  arn  = aws_lambda_function.data_processor.arn
-}
-
-resource "aws_lambda_permission" "allow_eventbridge" {
-  statement_id  = "AllowEventBridgeInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.data_processor.function_name
-  principal     = "events.amazonaws.com"
-  source_arn    = aws_cloudwatch_event_rule.daily_rule.arn
+  filename         = data.archive_file.lambda_zip.output_path
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
 }

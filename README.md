@@ -126,4 +126,4 @@ CI/CD enabled deployment pipeline
 👨‍💻 Author
 
 Ajinkya Mandlik
-Internship Project – Cloud & DevOps
+Project – Cloud & DevOps

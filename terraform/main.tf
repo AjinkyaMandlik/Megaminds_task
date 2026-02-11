@@ -3,11 +3,11 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "data_bucket" {
-  bucket = "internship-event-data-ajinkya-2026-"
+  bucket = "internship-event-data-2026"
 }
 
 resource "aws_iam_role" "lambda_role" {
-  name = "lambda-execution-role-ajinkya-"
+  name = "lambda-execution-role-ajinkya-2026"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -25,8 +25,6 @@ resource "aws_iam_role_policy_attachment" "lambda_basic" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
-
-I
 data "archive_file" "lambda_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../lambda"

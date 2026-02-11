@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "data_bucket" {
-  bucket = "internship-event-data-bucket-12345"
+  bucket = "internship-event-data-bucket"
 }
 
 resource "aws_iam_role" "lambda_role" {

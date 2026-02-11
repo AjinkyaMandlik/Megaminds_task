@@ -3,11 +3,11 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "data_bucket" {
-  bucket = "internship-event-data-ajinkya-2026"
+  bucket = "internship-event-data-ajinkya-2026-"
 }
 
 resource "aws_iam_role" "lambda_role" {
-  name = "lambda-execution-role-ajinkya"
+  name = "lambda-execution-role-ajinkya-"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"

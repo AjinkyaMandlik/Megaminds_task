@@ -3,11 +3,11 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "data_bucket" {
-  bucket = "internship-event-data-v3"
+  bucket = "internship-event-data-v1"
 }
 
 resource "aws_iam_role" "lambda_role" {
-  name = "lambda-execution-role-v2"
+  name = "lambda-execution-role-v1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -32,7 +32,7 @@ data "archive_file" "lambda_zip" {
 }
 
 resource "aws_lambda_function" "data_processor" {
-  function_name = "event-driven-data-processor-ajinkya"
+  function_name = "event-driven-data-processor-ajinkya-2026"
   role          = aws_iam_role.lambda_role.arn
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.9"

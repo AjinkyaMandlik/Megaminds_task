@@ -1,9 +1,7 @@
-📊 Event-Driven Data Processing Pipeline on AWS
+📊 Event-Driven Data Processing Pipeline on AWS 🚀
 📌 Project Overview
 
-This project implements a fully automated event-driven data processing pipeline using AWS services and Infrastructure as Code (IaC) with Terraform.
-The pipeline captures incoming data, stores it in Amazon S3, processes it using AWS Lambda, and generates automated daily summary reports triggered via Amazon EventBridge.
-Continuous Integration and Deployment (CI/CD) is implemented using GitHub Actions.
+This project implements a fully automated event-driven data processing pipeline using AWS services and Infrastructure as Code (IaC) with Terraform. The pipeline captures incoming data stored in Amazon S3, processes it using AWS Lambda, and logs execution details in Amazon CloudWatch. The entire infrastructure is deployed automatically using CI/CD with GitHub Actions, without requiring local Terraform or AWS CLI setup.
 
 🏗️ Architecture Overview
 
@@ -11,71 +9,56 @@ The solution uses the following AWS services:
 
 Amazon S3 – Stores uploaded data files
 
-AWS Lambda – Processes data and generates summaries
+AWS Lambda – Processes incoming data
 
-Amazon EventBridge – Triggers Lambda on a daily schedule
+Amazon EventBridge – Schedules Lambda execution (optional / extensible)
 
 Amazon CloudWatch Logs – Stores Lambda execution logs
 
 AWS IAM – Manages permissions securely
 
-GitHub Actions – Automates deployment (CI/CD)
-
 Terraform – Infrastructure as Code (IaC)
+
+GitHub Actions – CI/CD automation
 
 🔁 Workflow
 
-Data files are uploaded to Amazon S3.
+Infrastructure code is pushed to the main branch.
 
-Amazon EventBridge triggers the Lambda function once daily at a fixed time.
+GitHub Actions triggers the CI/CD pipeline.
 
-AWS Lambda reads data from S3 and processes it.
+Terraform provisions AWS resources automatically:
 
-Processed results and execution logs are stored in CloudWatch Logs.
+S3 bucket
 
-Infrastructure changes are automatically deployed using GitHub Actions.
+IAM role
+
+Lambda function
+
+Data files uploaded to S3 are available for processing.
+
+Lambda execution logs are stored in CloudWatch Logs.
 
 ⏰ Scheduling Strategy
 
-The Lambda function is triggered once per day using a cron-based EventBridge rule.
-
-This batch-processing approach is cost-effective and suitable for generating daily summary reports.
+The architecture supports scheduled execution using Amazon EventBridge (cron-based rules).
+This enables batch-style processing such as daily summaries and can be extended easily without changing the core infrastructure.
 
 🧱 Project Structure
 AWS/
-│
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml        # GitHub Actions CI/CD pipeline
-│
 ├── lambda/
 │   └── lambda_function.py    # Lambda function code
-│
 ├── terraform/
 │   └── main.tf               # Terraform IaC configuration
-│
 └── README.md
 
-🚀 Deployment Steps
-Prerequisites
+🚀 Deployment
+Automated Deployment (CI/CD – Recommended)
 
-AWS Account (Free Tier)
-
-IAM User with programmatic access
-
-AWS CLI configured (aws configure)
-
-Terraform installed
-
-GitHub account
-
-Local Deployment (Manual)
-terraform init
-terraform apply
-
-Automated Deployment (CI/CD)
-
-Push changes to the main branch
+Push code to the main branch
 
 GitHub Actions automatically:
 
@@ -85,45 +68,50 @@ Initializes Terraform
 
 Applies infrastructure changes
 
+✅ No local Terraform or AWS CLI installation required.
+
 🔐 Security Best Practices
 
 AWS credentials are stored securely using GitHub Secrets
 
-IAM access is limited to required permissions
+IAM permissions follow least privilege principle
 
-Terraform state files are excluded using .gitignore
+Root AWS account is not used
 
-Root AWS account is not used for development
+Infrastructure is managed via IaC only
 
 📄 Infrastructure as Code (IaC)
 
 Terraform is used to:
 
-Create S3 bucket
+Create an Amazon S3 bucket
 
-Deploy Lambda function
-
-Configure EventBridge schedule
+Deploy an AWS Lambda function
 
 Assign IAM roles and policies
 
 Enable CloudWatch logging
 
+Package Lambda code automatically using archive_file
+
 📈 CI/CD Implementation
 
-CI/CD is implemented using GitHub Actions, enabling automated deployment of infrastructure on every push to the main branch.
+CI/CD is implemented using GitHub Actions, enabling automatic deployment of cloud infrastructure on every push to the main branch. This ensures consistent, repeatable, and error-free infrastructure provisioning.
 
 🎯 Key Outcomes
 
-Fully automated cloud infrastructure
+Fully automated AWS infrastructure
 
-Event-driven and scheduled processing
+Event-driven, serverless architecture
 
-Secure and scalable design
+Secure IAM configuration
 
-CI/CD enabled deployment pipeline
+CI/CD enabled Infrastructure as Code
+
+Internship-ready cloud deployment
 
 👨‍💻 Author
 
 Ajinkya Mandlik
-Project – Cloud & DevOps
+Cloud & DevOps Project
+
